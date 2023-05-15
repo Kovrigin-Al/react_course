@@ -1,18 +1,14 @@
 import React from "react";
-import Input from "./components/Input";
-import Textarea from "./components/Textarea";
-import Button from "./components/Button";
+import Input from "./components/input/Input";
+import Textarea from "./components/textarea/Textarea";
+import Button from "./components/button/Button";
+import Form from "./components/form/Form";
 
 class App extends React.Component {
-    renderButton(text) {
-        return <Button text={text} />;
-    }
-
     render() {
         return (
-            <form className="form">
-                <h1 className="form-header">Registration form</h1>
-                <div className="form-body">
+            <Form>
+                <div>
                     <Input
                         innerText="Name:"
                         type="text"
@@ -58,7 +54,7 @@ class App extends React.Component {
                     <Button text="Submit" />
                     <Button text="Cancel" />
                 </div>
-            </form>
+            </Form>
         );
     }
 }

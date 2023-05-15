@@ -1,0 +1,26 @@
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+label:hover {
+    cursor: pointer;
+}
+
+input {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+input:focus {
+    outline: none;
+    border-color: #6c63ff;
+}
+
+.form-section {
+    margin-top: 10px;
+}
