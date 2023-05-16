@@ -7,10 +7,13 @@ export function validate(state, setState) {
     validateAbout.call({ state, setState });
     validateStack.call({ state, setState });
     validateProject.call({ state, setState });
-    setState(prev=>{
-        if(Object.values(prev.errors).every(i=>!i)){
-            return {showFormResult: true}
-        }})
+    setState((prev) => {
+        if (Object.values(prev.errors).every((i) => !i)) {
+            return { ...prev, showFormResult: true };
+        } else {
+            return prev;
+        }
+    });
 }
 
 function validateName() {
@@ -74,7 +77,7 @@ function validatePhone() {
                 phoneError: "The field is empty. Please fill in",
             },
         }));
-    } else if (this.state.phone.length !== 12){
+    } else if (this.state.phone.length !== 12) {
         this.setState((prev) => ({
             ...prev,
             errors: {
