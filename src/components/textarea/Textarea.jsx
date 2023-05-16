@@ -1,6 +1,20 @@
 import React from "react";
+import "./style.css";
 
 class Textarea extends React.Component {
+    handleChange = (e) => {
+        this.props.setState((prev) => ({
+            ...prev,
+            [this.props.name]: e.target.value,
+            errors: {
+                ...prev.errors,
+                [this.props.name + "Error"]:
+                    e.target.value.trim().length > 600
+                        ? "Exceeded the limit of characters in the field"
+                        : "",
+            },
+        }));
+    };
     render() {
         return (
             <div className="form-section">
@@ -13,19 +27,16 @@ class Textarea extends React.Component {
                     id={this.props.name}
                     rows="7"
                     value={this.props.state[this.props.name]}
-                    onChange={(e) =>
-                        this.props.setState({
-                            ...this.props.state,
-                            [this.props.name]: e.target.value,
-                        })
-                    }
+                    onChange={this.handleChange}
                 ></textarea>
                 {this.props.state[this.props.name].trim().length <= 600 && (
-                    <p>{this.props.state[this.props.name].trim().length} / 600</p>
+                    <p className="counter">
+                        {this.props.state[this.props.name].trim().length} / 600
+                    </p>
                 )}
-                {this.props.state[this.props.name].trim().length > 600 && (
-                    <p style={{ color: "red" }}>
-                        Exceeded the limit of characters in the field
+                {this.props.state.errors[this.props.name + "Error"] && (
+                    <p className="error">
+                        {this.props.state.errors[this.props.name + "Error"]}
                     </p>
                 )}
             </div>

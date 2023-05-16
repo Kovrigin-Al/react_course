@@ -1,5 +1,4 @@
 export function validate(state, setState) {
-    console.log(state)
     validateName.call({ state, setState });
     validateSurname.call({ state, setState });
     validateDate.call({ state, setState });
@@ -8,6 +7,10 @@ export function validate(state, setState) {
     validateAbout.call({ state, setState });
     validateStack.call({ state, setState });
     validateProject.call({ state, setState });
+    setState(prev=>{
+        if(Object.values(prev.errors).every(i=>!i)){
+            return {showFormResult: true}
+        }})
 }
 
 function validateName() {
@@ -18,7 +21,7 @@ function validateName() {
                 ...prev.errors,
                 nameError: "The field is empty. Please fill in",
             },
-        }), console.log(this.state));
+        }));
     } else if (this.state.name[0] !== this.state.name[0].toUpperCase()) {
         this.setState((prev) => ({
             ...prev,
@@ -69,6 +72,14 @@ function validatePhone() {
             errors: {
                 ...prev.errors,
                 phoneError: "The field is empty. Please fill in",
+            },
+        }));
+    } else if (this.state.phone.length !== 12){
+        this.setState((prev) => ({
+            ...prev,
+            errors: {
+                ...prev.errors,
+                phoneError: "Phone number must consist of 9 digits",
             },
         }));
     }

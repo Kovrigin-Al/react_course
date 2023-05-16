@@ -1,0 +1,28 @@
+textarea {
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100%;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #6c63ff;
+}
+
+textarea {
+    height: 150px;
+    resize: none;
+}
+
+.counter {
+    margin: 0;
+    color: gray
+}
+
+.error {
+    padding: 0;
+    margin: 0;
+    color: rgb(201, 47, 47);
+}

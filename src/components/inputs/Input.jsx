@@ -1,6 +1,15 @@
 import React from "react";
+import "./style.css";
 
 class Input extends React.Component {
+    handleChange = (e) => {
+        this.props.setState((prev) => ({
+            ...prev,
+            [this.props.name]: e.target.value,
+            errors: { ...prev.errors, [this.props.name + "Error"]: "" },
+        }));
+    };
+
     render() {
         return (
             <div className="form-section">
@@ -10,15 +19,10 @@ class Input extends React.Component {
                     id={this.props.name}
                     type={this.props.type}
                     value={this.props.state[this.props.name]}
-                    onChange={(e) =>
-                        this.props.setState({
-                            ...this.props.state,
-                            [this.props.name]: e.target.value,
-                        })
-                    }
+                    onChange={this.handleChange}
                 />
                 {this.props.state.errors[this.props.name + "Error"] && (
-                    <p>{this.props.state.errors[this.props.name + "Error"]}</p>
+                    <p className="error">{this.props.state.errors[this.props.name + "Error"]}</p>
                 )}
             </div>
         );
