@@ -1,145 +1,58 @@
 export function validate(state, setState) {
-    validateName.call({ state, setState });
-    validateSurname.call({ state, setState });
-    validateDate.call({ state, setState });
+    Object.keys(state.fields).forEach((i) => checkFieldIsNotEmpty(i, state, setState));
+    [("surname", "name")].forEach((i) => validateName.call({ state, setState }, i));
     validatePhone.call({ state, setState });
     validateLink.call({ state, setState });
-    validateAbout.call({ state, setState });
-    validateStack.call({ state, setState });
-    validateProject.call({ state, setState });
     setState((prev) => {
-        if (Object.values(prev.errors).every((i) => !i)) {
-            return { ...prev, showFormResult: true };
-        } else {
-            return prev;
-        }
+        return Object.values(prev.errors).every((i) => !i)
+            ? { ...prev, showFormResult: true }
+            : prev;
     });
 }
 
-function validateName() {
-    if (this.state.name.length === 0) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                nameError: "The field is empty. Please fill in",
-            },
-        }));
-    } else if (this.state.name[0] !== this.state.name[0].toUpperCase()) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                nameError: "The first character must be capitalized",
-            },
-        }));
-    }
-}
-
-function validateSurname() {
-    if (this.state.surname.length === 0) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                surnameError: "The field is empty. Please fill in",
-            },
-        }));
-    } else if (this.state.surname[0] !== this.state.surname[0].toUpperCase()) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                surnameError: "The first character must be capitalized",
-            },
-        }));
-    }
-}
-
-function validateDate() {
-    if (this.state.date.length === 0) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                dateError: "The field is empty. Please fill in",
-            },
-        }));
+function validateName(inputName) {
+    const firstLetter = this.state.fields[inputName]?.[0];
+    if (firstLetter && firstLetter !== firstLetter.toUpperCase()) {
+        setErrorForFieldName(
+            "The first character must be capitalized",
+            inputName,
+            this.setState
+        );
     }
 }
 
 function validatePhone() {
-    if (this.state.phone.length === 0) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                phoneError: "The field is empty. Please fill in",
-            },
-        }));
-    } else if (this.state.phone.length !== 12) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                phoneError: "Phone number must consist of 9 digits",
-            },
-        }));
+    if (this.state.fields.phone.length !== 12) {
+        setErrorForFieldName(
+            "Phone number must consist of 9 digits",
+            "phone",
+            this.setState
+        );
     }
 }
 
 function validateLink() {
-    if (this.state.link.length === 0) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                linkError: "The field is empty. Please fill in",
-            },
-        }));
-    } else if (!this.state.link.startsWith("https://")) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                linkError: "The link must start with 'https://'",
-            },
-        }));
+    if (!this.state.fields.link.startsWith("https://")) {
+        setErrorForFieldName(
+            "The link must start with 'https://'",
+            "link",
+            this.setState
+        );
     }
 }
 
-function validateAbout() {
-    if (this.state.about.length === 0) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                aboutError: "The field is empty. Please fill in",
-            },
-        }));
+function checkFieldIsNotEmpty(fieldName, state, setState) {
+    if (state.fields[fieldName].length === 0) {
+        setErrorForFieldName("The field is empty. Please fill in", fieldName, setState);
     }
 }
 
-function validateStack() {
-    if (this.state.stack.length === 0) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                stackError: "The field is empty. Please fill in",
-            },
-        }));
-    }
-}
-
-function validateProject() {
-    if (this.state.project.length === 0) {
-        this.setState((prev) => ({
-            ...prev,
-            errors: {
-                ...prev.errors,
-                projectError: "The field is empty. Please fill in",
-            },
-        }));
-    }
+function setErrorForFieldName(errorMessage, fieldName, setState) {
+    setState((prev) => ({
+        ...prev,
+        errors: {
+            ...prev.errors,
+            [fieldName + "Error"]: errorMessage,
+        },
+    }));
 }

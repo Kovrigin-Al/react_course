@@ -5,7 +5,7 @@ const Input = (props) => {
     const handleChange = (e) => {
         props.setState((prev) => ({
             ...prev,
-            [props.name]: e.target.value,
+            fields: {...prev.fields, [props.name]: e.target.value },
             errors: { ...prev.errors, [props.name + "Error"]: "" },
         }));
     };
@@ -17,7 +17,7 @@ const Input = (props) => {
                 placeholder={props.placeholder}
                 id={props.name}
                 type={props.type}
-                value={props.state[props.name]}
+                value={props.state.fields[props.name]}
                 onChange={handleChange}
             />
             {props.state.errors[props.name + "Error"] && (

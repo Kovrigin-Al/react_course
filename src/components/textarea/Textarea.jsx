@@ -5,7 +5,7 @@ const Textarea = (props) => {
     const handleChange = (e) => {
         props.setState((prev) => ({
             ...prev,
-            [props.name]: e.target.value,
+            fields: { ...prev.fields, [props.name]: e.target.value },
             errors: {
                 ...prev.errors,
                 [props.name + "Error"]:
@@ -29,8 +29,10 @@ const Textarea = (props) => {
                 value={props.state[props.name]}
                 onChange={handleChange}
             ></textarea>
-            {props.state[props.name].trim().length <= 600 && (
-                <p className="counter">{props.state[props.name].trim().length} / 600</p>
+            {props.state.fields[props.name].trim().length <= 600 && (
+                <p className="counter">
+                    {props.state.fields[props.name].trim().length} / 600
+                </p>
             )}
             {props.state.errors[props.name + "Error"] && (
                 <p className="error">{props.state.errors[props.name + "Error"]}</p>

@@ -18,8 +18,7 @@ const initialErrors = {
     projectError: "",
 };
 
-const initialState = {
-    showFormResult: false,
+const fields = {
     name: "",
     surname: "",
     date: "",
@@ -28,6 +27,11 @@ const initialState = {
     about: "",
     stack: "",
     project: "",
+};
+
+const initialState = {
+    showFormResult: false,
+    fields,
     errors: initialErrors,
 };
 
@@ -37,14 +41,10 @@ const App = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         let trimedState = {};
-        for (let i in state) {
-            if (i !== "errors" && i !== "showFormResult") {
-                trimedState[i] = state[i].trim();
-            } else {
-                trimedState[i] = state[i];
-            }
+        for (let i in state.fields) {
+            trimedState[i] = state.fields[i].trim();
         }
-        setState({ ...trimedState });
+        setState((prev) => ({ ...prev, fields: trimedState }));
         validate(state, setState);
     };
 
@@ -54,7 +54,7 @@ const App = () => {
     };
 
     if (state.showFormResult) {
-        return <FormResult {...state} />;
+        return <FormResult {...state.fields} />;
     } else {
         return (
             <Form>

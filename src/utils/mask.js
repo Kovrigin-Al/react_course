@@ -1,12 +1,12 @@
 export function mask(event) {
     const keyCode = event.keyCode;
-    const template = "7-____-__-__",
-        def = template.replace(/\D/g, ""),
-        val = this.value.replace(/\D/g, "");
-    let i = 0,
-        newValue = template.replace(/[_\d]/g, function (a) {
-            return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
-        });
+    const template = "7-____-__-__";
+    const def = template.replace(/\D/g, "");
+    const val = this.value.replace(/\D/g, "");
+    let i = 0;
+    let newValue = template.replace(/[_\d]/g, function (a) {
+        return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
+    });
     i = newValue.indexOf("_");
     if (i !== -1) {
         newValue = newValue.slice(0, i);

@@ -18,7 +18,7 @@ const PhoneInput = (props) => {
     const handleChange = (e) => {
         props.setState((prev) => ({
             ...prev,
-            [props.name]: e.target.value,
+            fields: { ...prev.fields, [props.name]: e.target.value },
             errors: { ...prev.errors, [props.name + "Error"]: "" },
         }));
     };
@@ -30,13 +30,11 @@ const PhoneInput = (props) => {
                 placeholder={props.placeholder}
                 id={props.name}
                 type={props.type}
-                value={props.state[props.name]}
+                value={props.state.fields[props.name]}
                 onChange={handleChange}
             />
             {props.state.errors[props.name + "Error"] && (
-                <p className="error">
-                    {props.state.errors[props.name + "Error"]}
-                </p>
+                <p className="error">{props.state.errors[props.name + "Error"]}</p>
             )}
         </div>
     );
