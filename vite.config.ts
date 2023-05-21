@@ -17,4 +17,10 @@ export default defineConfig({
     setupFiles: "src/setupTests",
     mockReset: true,
   },
+rewrites: [
+        {
+            "source": "/(.*)",
+            "destination": "/"
+        }
+    ]
 })
